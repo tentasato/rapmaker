@@ -1,0 +1,24 @@
+<p>ラップメーカー（アジカン）</p>
+<p>単語を平仮名で入力すれば、韻を踏める単語を検索します。</p>
+      <%= form_tag(rapwords_path, :method => 'get' ) do %>
+  <%= text_field_tag :search %>
+  <%= submit_tag 'Search', :content => nil %>
+<% end %>
+
+<p> ※後ろ二文字が一致する単語を呼び出します。<p/>
+<p>※結果に出てくる単語はすべてアジアンカンフージェネレーションの楽曲の歌詞に使われたものです。</p>
+<% if @search_word.present? %>
+  <p>入力された文字</p>
+  <p><%= simple_format(@search_word.gsub(@strong_word, "<strong>#{@strong_word}</strong>")) %></p>
+<% end %>
+<p>結果</p>
+<ul><% @rapwords.each do |rapword| %>
+  <li>
+    <% if @strong_word.present? %>
+      <%= simple_format(rapword.content.gsub(@strong_word, "<strong>#{@strong_word}</strong>")) %>
+    <% else %>
+      <%= rapword.content %>
+    <% end %>
+  </li>
+  <% end %>
+</ul>
